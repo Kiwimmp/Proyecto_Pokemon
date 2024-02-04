@@ -1,0 +1,8 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource>
+        <file>bolsa.png</file>
+        <file>pokeball.png</file>
+        <file>elipse.png</file>
+    </qresource>
+</RCC>
