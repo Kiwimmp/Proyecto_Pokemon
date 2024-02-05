@@ -4,10 +4,12 @@ import requests
 class Ui_MainWindow(object):
 
     def __init__(self):
+        self.setupUi(MainWindow)
         self.asignar_pokemon()
         self.actualizar_ataques()
     
     def asignar_pokemon(self):
+
         url = "https://pokeapi.co/api/v2/pokemon?limit=151"
         response = requests.get(url)
         data = response.json()
@@ -28,14 +30,18 @@ class Ui_MainWindow(object):
         response = requests.get(url)
         data = response.json()
 
-        if "abilities" in data:
-            ataques = [ability["ability"]["name"].capitalize() for ability in data["abilities"]]
-            ataques_str = ", ".join(ataques)
-            QtWidgets.QMessageBox.information(self.centralwidget, "Ataques de {}".format(pokemon_seleccionado.capitalize()), ataques_str)
-        else:
-            QtWidgets.QMessageBox.warning(self.centralwidget, "Error", "No se pudieron obtener los ataques del Pokémon.")
+        ataques_combobox_name = "comboBox_29"
+        ataques_combobox = getattr(self, ataques_combobox_name, None)
 
-    
+        if ataques_combobox:
+            ataques_combobox.clear()
+
+            if "abilities" in data:
+                ataques = [ability["ability"]["name"].capitalize() for ability in data["abilities"]]
+                ataques_combobox.addItems(ataques)
+            else:
+                ataques_combobox.addItem("No se encuentran movimientos")
+        
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -252,7 +258,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_62.addWidget(self.verticalWidget_24)
         self.comboBox_29 = QtWidgets.QComboBox(parent=self.horizontalWidget_15)
         self.comboBox_29.setObjectName("comboBox_29")
-        #self.comboBox_29.addItems(self.actualizar_ataques())
+        self.comboBox_29.currentIndexChanged.connect(self.actualizar_ataques)
         self.verticalLayout_62.addWidget(self.comboBox_29)
         self.comboBox_30 = QtWidgets.QComboBox(parent=self.horizontalWidget_15)
         self.comboBox_30.setObjectName("comboBox_30")
