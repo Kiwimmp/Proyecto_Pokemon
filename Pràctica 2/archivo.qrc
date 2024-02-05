@@ -1,0 +1,21 @@
+<RCC>
+  <qresource>
+    <file>fondo login.PNG</file>
+    <file>pokemons.png</file>
+    <file>logo.png</file>
+    <file>logo-google.jpg</file>
+    <file>road.PNG</file>
+    <file>Profesor_Oak.png</file>
+    <file>platos.png</file>
+    <file>squirtle.jpg</file>
+    <file>ladder.jpg</file>
+    <file>partida-rapida.jpg</file>
+    <file>build.jpg</file>
+    <file>squirtlePNG.png</file>
+    <file>bolsa.png</file>
+    <file>elipse.png</file>
+    <file>pokeballabierta.png</file>
+    <file>pickachu.png</file>
+  </qresource>
+  <qresource prefix="prefijoNuevo"/>
+</RCC>
