@@ -2,14 +2,12 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 import requests
 
 class Ui_MainWindow(object):
-
     def __init__(self):
         self.setupUi(MainWindow)
         self.asignar_pokemon()
-        self.actualizar_ataques()
+        self.asignar_habilidad()
     
     def asignar_pokemon(self):
-
         url = "https://pokeapi.co/api/v2/pokemon?limit=151"
         response = requests.get(url)
         data = response.json()
@@ -20,28 +18,21 @@ class Ui_MainWindow(object):
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItems(nombre_pokemons)
 
-        self.comboBox.currentIndexChanged.connect(self.actualizar_ataques)
+        self.comboBox.currentIndexChanged.connect(self.asignar_habilidad)
         
         return self.comboBox
     
-    def actualizar_ataques(self):
+    def asignar_habilidad(self):
         pokemon_seleccionado = self.comboBox.currentText().lower()
         url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_seleccionado}"
         response = requests.get(url)
         data = response.json()
 
-        ataques_combobox_name = "comboBox_29"
-        ataques_combobox = getattr(self, ataques_combobox_name, None)
+        self.Abilidad.clear()  # Limpiar el comboBox de habilidades
 
-        if ataques_combobox:
-            ataques_combobox.clear()
-
-            if "abilities" in data:
-                ataques = [ability["ability"]["name"].capitalize() for ability in data["abilities"]]
-                ataques_combobox.addItems(ataques)
-            else:
-                ataques_combobox.addItem("No se encuentran movimientos")
-        
+        if "abilities" in data:
+            habilidades = [ability["ability"]["name"].capitalize() for ability in data["abilities"]]
+            self.Abilidad.addItems(habilidades)
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -232,10 +223,9 @@ class Ui_MainWindow(object):
         self.label_69 = QtWidgets.QLabel(parent=self.widget_7)
         self.label_69.setObjectName("label_69")
         self.verticalLayout_65.addWidget(self.label_69)
-        self.label_70 = QtWidgets.QLabel(parent=self.widget_7)
-        self.label_70.setText("")
-        self.label_70.setObjectName("label_70")
-        self.verticalLayout_65.addWidget(self.label_70)
+        self.Abilidad = QtWidgets.QComboBox(parent=self.widget_7)
+        self.Abilidad.setObjectName("Abilidad")
+        self.verticalLayout_65.addWidget(self.Abilidad)
         self.verticalLayout_62.addWidget(self.widget_7)
         self.verticalWidget_24 = QtWidgets.QWidget(parent=self.horizontalWidget_15)
         self.verticalWidget_24.setStyleSheet("background-color: rgb(232, 232, 232);")
@@ -258,7 +248,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_62.addWidget(self.verticalWidget_24)
         self.comboBox_29 = QtWidgets.QComboBox(parent=self.horizontalWidget_15)
         self.comboBox_29.setObjectName("comboBox_29")
-        self.comboBox_29.currentIndexChanged.connect(self.actualizar_ataques)
         self.verticalLayout_62.addWidget(self.comboBox_29)
         self.comboBox_30 = QtWidgets.QComboBox(parent=self.horizontalWidget_15)
         self.comboBox_30.setObjectName("comboBox_30")
